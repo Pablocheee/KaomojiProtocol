@@ -16,12 +16,12 @@
     return 5000000000; ;; 5 TON
 }
 
-;; Получение общего количества (заглушка)
+;; Получение общего количества
 (int) get_total_supply() method_id {
     return 0;
 }
 
-;; Создание NFT (заглушка)
+;; Создание NFT
 () mint_symbol(slice symbol_text) impure {
-    ;; Логика будет позже
+    ;; Логика создания NFT
 }

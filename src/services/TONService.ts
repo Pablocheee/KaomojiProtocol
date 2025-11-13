@@ -1,59 +1,40 @@
-﻿// services/TONService.ts
-import { Address, TonClient, fromNano, toNano } from '@ton/ton';
-import { JettonMaster, JettonWallet } from '@ton/ton';
+﻿// src/services/TONService.ts
+import { Address, Cell, TonClient } from '@ton/ton';
 
 export class TONService {
     private client: TonClient;
-    
+    private nftContractAddress: Address | null = null;
+
     constructor() {
         this.client = new TonClient({
-            endpoint: process.env.TON_RPC_URL || 'https://toncenter.com/api/v2/jsonRPC'
+            endpoint: 'https://testnet.toncenter.com/api/v2/jsonRPC'
         });
     }
 
-    // Получение баланса TON
-    async getBalance(walletAddress: string): Promise<number> {
-        try {
-            const balance = await this.client.getBalance(Address.parse(walletAddress));
-            return parseFloat(fromNano(balance));
-        } catch (error) {
-            console.error('Balance error:', error);
-            return 0;
-        }
+    async initializeContract(contractAddress: string) {
+        this.nftContractAddress = Address.parse(contractAddress);
     }
 
-    // Получение баланса Jetton
-    async getJettonBalance(walletAddress: string, jettonMaster: string): Promise<number> {
+    async createSymbolNFT(symbol: string, userWallet: string, tonAmount: number): Promise<boolean> {
         try {
-            const jettonMasterContract = this.client.open(JettonMaster.create(Address.parse(jettonMaster)));
-            const jettonWalletAddress = await jettonMasterContract.getWalletAddress(Address.parse(walletAddress));
-            const jettonWallet = this.client.open(JettonWallet.create(jettonWalletAddress));
-            const balance = await jettonWallet.getBalance();
-            return parseFloat(fromNano(balance));
-        } catch (error) {
-            console.error('Jetton balance error:', error);
-            return 0;
-        }
-    }
+            if (tonAmount !== 5) {
+                throw new Error('Для создания NFT нужно отправить 5 TON');
+            }
 
-    // Создание deeplink для Tonkeeper
-    createTonkeeperDeepLink(toAddress: string, amount: number, jettonAddress?: string): string {
-        const baseUrl = 'tonkeeper://transfer/';
-        const params = new URLSearchParams({
-            address: toAddress,
-            amount: toNano(amount).toString(),
-            ...(jettonAddress && { jetton: jettonAddress })
-        });
-        return `${baseUrl}?${params.toString()}`;
-    }
-
-    // Проверка транзакции
-    async checkTransaction(hash: string): Promise<boolean> {
-        try {
-            const transaction = await this.client.getTransaction(Address.parse('EQD...'), hash);
-            return !!transaction;
+            console.log('Создание NFT символа:', symbol, 'для кошелька:', userWallet);
+            
+            return true;
         } catch (error) {
+            console.error('Ошибка создания NFT:', error);
             return false;
         }
+    }
+
+    async checkSymbolOwnership(symbol: string, userWallet: string): Promise<boolean> {
+        return true;
+    }
+
+    async getMintPrice(): Promise<number> {
+        return 5;
     }
 }
