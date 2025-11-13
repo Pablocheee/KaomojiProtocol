@@ -1,0 +1,11 @@
+;; Minimal Symbol NFT
+
+() recv_internal(int balance, int msg_value, cell in_msg_body) impure {
+    ;; Пустая функция - просто возвращаем управление
+    return ();
+}
+
+;; Получение информации
+(int) get_total_supply() method_id {
+    return 0;
+}
