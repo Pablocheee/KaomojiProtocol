@@ -1,10 +1,12 @@
-;; Symbol NFT Contract
-;; Цена создания: 5 TON
+﻿;; Symbol NFT Contract v2
+;; Цена создания: 1 TON (вместо 5 TON)
+;; Роялти: 5% создателю + 1% протоколу
 
 () recv_internal(int balance, int msg_value, cell in_msg_body) impure {
-    ;; Проверяем что прислали 5 TON для создания NFT
-    if (msg_value == 5000000000) { 
+    ;; Проверяем что прислали 1 TON для создания NFT
+    if (msg_value == 1000000000) { ;; 1 TON в наноТОН
         ;; Успешный платеж - NFT создан
+        ;; Здесь будет логика создания с роялти
         return ();
     }
     
@@ -13,7 +15,7 @@
 
 ;; Получение цены создания
 (int) get_mint_price() method_id {
-    return 5000000000; ;; 5 TON
+    return 1000000000; ;; 1 TON
 }
 
 ;; Получение общего количества
@@ -23,5 +25,5 @@
 
 ;; Создание NFT
 () mint_symbol(slice symbol_text) impure {
-    ;; Логика создания NFT
+    ;; Логика создания NFT с установкой роялти
 }
