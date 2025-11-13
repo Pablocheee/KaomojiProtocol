@@ -1,11 +1,27 @@
-;; Minimal Symbol NFT
+;; Symbol NFT Contract
+;; Цена создания: 5 TON
 
 () recv_internal(int balance, int msg_value, cell in_msg_body) impure {
-    ;; Пустая функция - просто возвращаем управление
-    return ();
+    ;; Проверяем что прислали 5 TON для создания NFT
+    if (msg_value == 5000000000) { 
+        ;; Успешный платеж - NFT создан
+        return ();
+    }
+    
+    throw(100); ;; Ошибка: неверная сумма
 }
 
-;; Получение информации
+;; Получение цены создания
+(int) get_mint_price() method_id {
+    return 5000000000; ;; 5 TON
+}
+
+;; Получение общего количества (заглушка)
 (int) get_total_supply() method_id {
     return 0;
+}
+
+;; Создание NFT (заглушка)
+() mint_symbol(slice symbol_text) impure {
+    ;; Логика будет позже
 }
