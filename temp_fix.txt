@@ -1,0 +1,5 @@
+﻿// src/services/NFTSymbolExchange.ts (только исправленная строка)
+// В методе buySymbol заменяем строку 82:
+// Было: await nftSymbolRepository.repository.save(symbolData);
+// Стало: 
+await nftSymbolRepository.saveSymbol(symbolData);

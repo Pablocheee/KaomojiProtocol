@@ -1,27 +1,43 @@
 {
-  "name": "kaomoji-protocol",
+  "name": "symbol-protocol",
   "version": "1.0.0",
-  "description": "TON-based emoji trading protocol",
-  "main": "main.ts",
+  "description": "Symbol Protocol - NFT Symbol Exchange and Blockchain Chat",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "ts-node main.ts",
-    "dev": "nodemon main.ts",
-    "build": "tsc"
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "clean": "rimraf dist",
+    "dev:watch": "nodemon --exec ts-node src/index.ts"
   },
   "dependencies": {
-    "@orbs-network/ton-access": "^2.3.3",
-    "@ton-community/func-js": "^0.11.0",
-    "@ton-community/sandbox": "^0.11.0",
     "@ton/core": "^0.62.0",
     "@ton/crypto": "^3.3.0",
     "@ton/ton": "^16.0.0",
-    "dotenv": "^16.4.5",
-    "telegraf": "^4.16.3"
+    "dotenv": "^16.6.1",
+    "ioredis": "^5.4.1",
+    "pg": "^8.16.3",
+    "reflect-metadata": "^0.2.2",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "telegraf": "^4.16.3",
+    "typeorm": "^0.3.27"
   },
   "devDependencies": {
-    "@types/node": "^20.11.5",
-    "nodemon": "^3.0.2",
+    "@types/ioredis": "^5.0.0",
+    "@types/node": "^20.19.25",
+    "nodemon": "^3.1.11",
+    "rimraf": "^5.0.10",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
-  }
+    "typescript": "^5.9.3"
+  },
+  "keywords": [
+    "nft",
+    "blockchain",
+    "telegram",
+    "trading",
+    "symbols"
+  ],
+  "author": "Symbol Protocol Team",
+  "license": "MIT"
 }
