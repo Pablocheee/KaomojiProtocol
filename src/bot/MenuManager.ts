@@ -1,4 +1,4 @@
-﻿// src/bot/MenuManager.ts
+﻿// src/bot/MenuManager.ts - минималистичный дизайн
 import { TradingDataService } from '../services/TradingDataService';
 
 interface MenuData {
@@ -12,17 +12,17 @@ export class MenuManager {
 
     getMainMenu(): MenuData {
         return {
-            text: '🎭 *Symbol Protocol* - Торговая площадка символов\\n\\n' +
-                  '💎 *Создавай* NFT символы за 1 TON\\n' +
-                  '💰 *Торгуй* редкими символами\\n' +
-                  '👑 *Получай 5%* с каждой перепродажи\\n\\n' +
-                  'Выбери действие:',
+            text: 'SYMBOL PROTOCOL\\n\\n' +
+                  'Торговая площадка символов\\n\\n' +
+                  '[1 TON ЗА СОЗДАНИЕ]\\n' +
+                  '[5% РОЯЛТИ С ПРОДАЖ]\\n\\n' +
+                  'ВЫБЕРИ ДЕЙСТВИЕ:',
             keyboard: {
                 inline_keyboard: [
-                    [{ text: '🔄 Создать символ', callback_data: 'create_symbol' }],
-                    [{ text: '💰 Торговая площадка', callback_data: 'trading' }],
-                    [{ text: '👛 Мой портфель', callback_data: 'portfolio' }],
-                    [{ text: '📊 Топ символов', callback_data: 'top_symbols' }]
+                    [{ text: '[СОЗДАТЬ СИМВОЛ]', callback_data: 'create_symbol' }],
+                    [{ text: '[ТОРГОВЛЯ]', callback_data: 'trading' }],
+                    [{ text: '[ПОРТФЕЛЬ]', callback_data: 'portfolio' }],
+                    [{ text: '[ТОП СИМВОЛОВ]', callback_data: 'top_symbols' }]
                 ]
             }
         };
@@ -30,19 +30,19 @@ export class MenuManager {
 
     getCreateMenu(): MenuData {
         return {
-            text: '🔄 *Создание NFT символа*\\n\\n' +
-                  '💎 Цена: *1 TON* (обновлено!)\\n' +
-                  '📝 Максимум: *10 символов*\\n\\n' +
-                  '🎯 *Ты получаешь 5% с каждой перепродажи!*\\n\\n' +
-                  'Отправь символ для регистрации:\\n' +
+            text: 'СОЗДАНИЕ СИМВОЛА\\n\\n' +
+                  'ЦЕНА: 1 TON\\n' +
+                  'МАКС: 10 СИМВОЛОВ\\n' +
+                  'РОЯЛТИ: 5% С ПРОДАЖ\\n\\n' +
+                  'ОТПРАВЬ СИМВОЛ ДЛЯ РЕГИСТРАЦИИ\\n' +
                   '🚀 💎 🌟 😊 (^_^)\\n\\n' +
-                  '*Или выбери действие:*',
+                  'ИЛИ ВЫБЕРИ ПРИМЕР:',
             keyboard: {
                 inline_keyboard: [
-                    [{ text: '🚀 Пример: Rocket', callback_data: 'example_rocket' }],
-                    [{ text: '💎 Пример: Diamond', callback_data: 'example_diamond' }],
-                    [{ text: '🌟 Пример: Star', callback_data: 'example_star' }],
-                    [{ text: '◀️ Назад в меню', callback_data: 'main_menu' }]
+                    [{ text: '[🚀 ROCKET]', callback_data: 'example_rocket' }],
+                    [{ text: '[💎 DIAMOND]', callback_data: 'example_diamond' }],
+                    [{ text: '[🌟 STAR]', callback_data: 'example_star' }],
+                    [{ text: '[НАЗАД]', callback_data: 'main_menu' }]
                 ]
             }
         };
@@ -56,28 +56,28 @@ export class MenuManager {
         const recentTrades = this.tradingService.getRecentTrades();
         const changeIcon = symbolData.change24h >= 0 ? '↗️' : '↘️';
 
-        const text = '💰 *ТОРГОВАЯ ПЛОЩАДКА*\\n\\n' +
-              '*(^_^) ' + symbolData.price.toFixed(2) + ' TON ' + changeIcon + Math.abs(symbolData.change24h) + '%*\\n' +
+        const text = 'ТОРГОВАЯ ПЛОЩАДКА\\n\\n' +
+              '(^_^) ' + symbolData.price.toFixed(2) + ' TON ' + changeIcon + Math.abs(symbolData.change24h) + '%\\n' +
               chart + '\\n\\n' +
               recentTrades.join('  ') + '\\n' +
               (recentTrades.slice(3).join('  ') || '') + '\\n\\n' +
-              '*Выбери действие:*';
+              'ВЫБЕРИ ДЕЙСТВИЕ:';
 
         return {
             text: text,
             keyboard: {
                 inline_keyboard: [
                     [
-                        { text: '🟢 КУПИТЬ', callback_data: 'buy_smile' },
-                        { text: '🔴 ПРОДАТЬ', callback_data: 'sell_smile' }
+                        { text: '[КУПИТЬ]', callback_data: 'buy_smile' },
+                        { text: '[ПРОДАТЬ]', callback_data: 'sell_smile' }
                     ],
                     [
-                        { text: '📊 Детали', callback_data: 'chart_detail' },
-                        { text: '📈 График', callback_data: 'show_chart' }
+                        { text: '[ДЕТАЛИ]', callback_data: 'chart_detail' },
+                        { text: '[ГРАФИК]', callback_data: 'show_chart' }
                     ],
                     [
-                        { text: '🔄 Обновить', callback_data: 'refresh_trading' },
-                        { text: '◀️ Меню', callback_data: 'main_menu' }
+                        { text: '[ОБНОВИТЬ]', callback_data: 'refresh_trading' },
+                        { text: '[МЕНЮ]', callback_data: 'main_menu' }
                     ]
                 ]
             }
@@ -93,26 +93,26 @@ export class MenuManager {
         const minPrice = Math.min(...symbolData.priceHistory).toFixed(2);
         const marketCap = (symbolData.price * 2387).toFixed(0);
 
-        const text = '📊 *ДЕТАЛИ СИМВОЛА (^_^)*\\n\\n' +
-              '💰 *Цена:* ' + symbolData.price.toFixed(3) + ' TON\\n' +
-              '📈 *Изменение:* ' + changeIcon + Math.abs(symbolData.change24h) + '% (24ч)\\n' +
-              '💧 *Объем:* ' + symbolData.volume.toFixed(0) + ' TON\\n' +
-              '🔄 *Сделки:* ' + symbolData.trades + ' (24ч)\\n\\n' +
-              '*Статистика:*\\n' +
-              'Макс: ' + maxPrice + ' TON | Мин: ' + minPrice + ' TON\\n' +
-              'Капитализация: ' + marketCap + ' TON\\n\\n' +
-              '*Владельцы:* 247';
+        const text = 'ДЕТАЛИ СИМВОЛА (^_^)\\n\\n' +
+              'ЦЕНА: ' + symbolData.price.toFixed(3) + ' TON\\n' +
+              'ИЗМЕНЕНИЕ: ' + changeIcon + Math.abs(symbolData.change24h) + '% (24ч)\\n' +
+              'ОБЪЕМ: ' + symbolData.volume.toFixed(0) + ' TON\\n' +
+              'СДЕЛКИ: ' + symbolData.trades + ' (24ч)\\n\\n' +
+              'СТАТИСТИКА:\\n' +
+              'МАКС: ' + maxPrice + ' TON | МИН: ' + minPrice + ' TON\\n' +
+              'КАПИТАЛИЗАЦИЯ: ' + marketCap + ' TON\\n\\n' +
+              'ВЛАДЕЛЬЦЫ: 247';
 
         return {
             text: text,
             keyboard: {
                 inline_keyboard: [
                     [
-                        { text: '🟢 КУПИТЬ', callback_data: 'buy_smile' },
-                        { text: '🔴 ПРОДАТЬ', callback_data: 'sell_smile' }
+                        { text: '[КУПИТЬ]', callback_data: 'buy_smile' },
+                        { text: '[ПРОДАТЬ]', callback_data: 'sell_smile' }
                     ],
                     [
-                        { text: '◀️ Назад', callback_data: 'trading' }
+                        { text: '[НАЗАД]', callback_data: 'trading' }
                     ]
                 ]
             }
@@ -121,17 +121,17 @@ export class MenuManager {
 
     getPortfolioMenu(): MenuData {
         return {
-            text: '👛 *Мой портфель*\\n\\n' +
-                  '💰 *Баланс:* 0 TON\\n' +
-                  '🎯 *Символов:* 0\\n\\n' +
-                  '*Твои NFT символы:*\\n' +
-                  'Пока пусто...\\n\\n' +
-                  'Создай свой первый символ за 1 TON!',
+            text: 'МОЙ ПОРТФЕЛЬ\\n\\n' +
+                  'БАЛАНС: 0 TON\\n' +
+                  'СИМВОЛОВ: 0\\n\\n' +
+                  'ТВОИ NFT СИМВОЛЫ:\\n' +
+                  'ПОКА ПУСТО...\\n\\n' +
+                  'СОЗДАЙ ПЕРВЫЙ СИМВОЛ ЗА 1 TON!',
             keyboard: {
                 inline_keyboard: [
-                    [{ text: '🔄 Создать символ', callback_data: 'create_symbol' }],
-                    [{ text: '💰 Торговая площадка', callback_data: 'trading' }],
-                    [{ text: '◀️ Назад в меню', callback_data: 'main_menu' }]
+                    [{ text: '[СОЗДАТЬ]', callback_data: 'create_symbol' }],
+                    [{ text: '[ТОРГОВЛЯ]', callback_data: 'trading' }],
+                    [{ text: '[МЕНЮ]', callback_data: 'main_menu' }]
                 ]
             }
         };
@@ -139,19 +139,19 @@ export class MenuManager {
 
     getTopSymbolsMenu(): MenuData {
         return {
-            text: '📊 *Топ символов*\\n\\n' +
-                  '🏆 *Самые популярные:*\\n' +
-                  '1. 🚀 Rocket - 150 TON объем\\n' +
-                  '2. 💎 Diamond - 89 TON объем\\n' +
-                  '3. 🌟 Star - 75 TON объем\\n\\n' +
-                  '🔥 *Трендовые:*\\n' +
-                  '⭐ New Moon - +45% за день\\n' +
-                  '⚡ Lightning - +32% за день',
+            text: 'ТОП СИМВОЛОВ\\n\\n' +
+                  'САМЫЕ ПОПУЛЯРНЫЕ:\\n' +
+                  '1. 🚀 ROCKET - 150 TON ОБЪЕМ\\n' +
+                  '2. 💎 DIAMOND - 89 TON ОБЪЕМ\\n' +
+                  '3. 🌟 STAR - 75 TON ОБЪЕМ\\n\\n' +
+                  'ТРЕНДОВЫЕ:\\n' +
+                  '⭐ NEW MOON - +45% ЗА ДЕНЬ\\n' +
+                  '⚡ LIGHTNING - +32% ЗА ДЕНЬ',
             keyboard: {
                 inline_keyboard: [
-                    [{ text: '🚀 Купить Rocket', callback_data: 'buy_rocket' }],
-                    [{ text: '💎 Купить Diamond', callback_data: 'buy_diamond' }],
-                    [{ text: '◀️ Назад в меню', callback_data: 'main_menu' }]
+                    [{ text: '[КУПИТЬ ROCKET]', callback_data: 'buy_rocket' }],
+                    [{ text: '[КУПИТЬ DIAMOND]', callback_data: 'buy_diamond' }],
+                    [{ text: '[МЕНЮ]', callback_data: 'main_menu' }]
                 ]
             }
         };
