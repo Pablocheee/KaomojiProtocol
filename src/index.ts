@@ -1,6 +1,7 @@
 ﻿// src/index.ts
 import { startBot } from './bot/bot';
 import { symbolService } from './core/SymbolProtocolService';
+import { DemoDataService } from './services/DemoDataService';
 import * as dotenv from 'dotenv';
 
 // Явно загружаем .env
@@ -10,10 +11,12 @@ async function main() {
     console.log('🎭 Symbol Protocol - Starting System Services...');
     
     try {
+        // Инициализация демо-данных
+        console.log('📦 Initializing demo data...');
+        await DemoDataService.initializeDemoData();
+        
         // Инициализация системных сервисов
         console.log('📦 Initializing system components...');
-        
-        // Проверка подключения к Redis и другим сервисам
         const stats = await symbolService.getSystemStats();
         console.log('✅ System services initialized:', stats);
         
